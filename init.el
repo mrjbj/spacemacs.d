@@ -719,14 +719,14 @@ before packages are loaded."
 
   ;; Disable Bidirectional Parentheses Algorithm
   (if (version<= "27.1" emacs-version)
-      (setq bidi-inhibit-bpa t))
+    (setq bidi-inhibit-bpa t))
 
   ;; Files with known long lines
   ;; SPC f l to open files literally to disable most text processing
 
   ;; So long mode when Emacs thinks a file would affect performance
   (if (version<= "27.1" emacs-version)
-      (global-so-long-mode 1))
+    (global-so-long-mode 1))
 
   ;; End of: Emacs text rendering optimizations
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -741,8 +741,8 @@ before packages are loaded."
   ;;
   (with-eval-after-load 'doom-modeline
     (doom-modeline-def-modeline 'practicalli-modeline
-      '(workspace-name window-number modals persp-name buffer-info remote-host vcs)
-      '(repl debug lsp process matches checker buffer-position word-count parrot selection-info misc-info))
+                                '(workspace-name window-number modals persp-name buffer-info remote-host vcs)
+                                '(repl debug lsp process matches checker buffer-position word-count parrot selection-info misc-info))
     (practicalli/setup-custom-doom-modeline))
   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -758,6 +758,7 @@ before packages are loaded."
   ;; Toggle workspaces forward/backwards
   (spacemacs/set-leader-keys "ow" 'eyebrowse-next-window-config)
   (spacemacs/set-leader-keys "oW" 'eyebrowse-last-window-config)
+  (setq-default evil-escape-key-sequence "jk")
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -876,7 +877,7 @@ before packages are loaded."
   ;; Define a kanban style set of stages for todo tasks
   (with-eval-after-load 'org
     (setq org-todo-keywords
-         '((sequence "TODO" "DOING" "BLOCKED" "REVIEW" "|" "DONE" "ARCHIVED"))))
+          '((sequence "TODO" "DOING" "BLOCKED" "REVIEW" "|" "DONE" "ARCHIVED"))))
   ;;
   ;; The default keywords all use the same colour.
   ;; Make the states easier to distinguish by using different colours
@@ -915,13 +916,13 @@ before packages are loaded."
   ;;
   ;; customize org-mode's checkboxes with unicode symbols
   (add-hook
-   'org-mode-hook
-   (lambda ()
-     "Beautify Org Checkbox Symbol"
-     (push '("[ ]" . "☐") prettify-symbols-alist)
-     (push '("[X]" . "☑" ) prettify-symbols-alist)
-     (push '("[-]" . "❍" ) prettify-symbols-alist)
-     (prettify-symbols-mode)))
+    'org-mode-hook
+    (lambda ()
+            "Beautify Org Checkbox Symbol"
+            (push '("[ ]" . "☐") prettify-symbols-alist)
+            (push '("[X]" . "☑" ) prettify-symbols-alist)
+            (push '("[-]" . "❍" ) prettify-symbols-alist)
+            (prettify-symbols-mode)))
   ;;
   ;; Markdown mode hook for orgtbl-mode minor mode
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
@@ -1051,7 +1052,7 @@ before packages are loaded."
              (point-movement (if (string= cmtstr line-start) -2 2))
              (ending-point-pos (+ point-pos1 point-movement 1)))
         (if (string= cmtstr line-start)
-            (delete-char cmtstr-len)
+          (delete-char cmtstr-len)
           (insert cmtstr))
         (goto-char ending-point-pos)))
     (evil-normal-state))
@@ -1076,12 +1077,12 @@ before packages are loaded."
       (goto-char (point-min))
       (while (search-forward-regexp "^(comment\\>" nil 'noerror)
         (call-interactively
-         (if arg 'evil-open-fold
-           'evil-close-fold)))))
+          (if arg 'evil-open-fold
+              'evil-close-fold)))))
   ;;
   (evil-define-key 'normal clojure-mode-map
-    "zC" 'clojure-hack/toggle-comment-block
-    "zO" (lambda () (interactive) (clojure-hack/toggle-comment-block 'open)))
+                   "zC" 'clojure-hack/toggle-comment-block
+                   "zO" (lambda () (interactive) (clojure-hack/toggle-comment-block 'open)))
   ;;
   ;;
   ;; Experiment: Start Clojure REPL with a specific profile
@@ -1150,18 +1151,18 @@ before packages are loaded."
   (defmacro esh-section (NAME ICON FORM &rest PROPS)
     "Build eshell section NAME with ICON prepended to evaled FORM with PROPS."
     `(setq ,NAME
-           (lambda () (when ,FORM
-                        (-> ,ICON
-                            (concat esh-section-delim ,FORM)
-                            (with-face ,@PROPS))))))
+            (lambda () (when ,FORM
+                         (-> ,ICON
+                              (concat esh-section-delim ,FORM)
+                              (with-face ,@PROPS))))))
   ;;
   (defun esh-acc (acc x)
     "Accumulator for evaluating and concatenating esh-sections."
     (--if-let (funcall x)
-        (if (s-blank? acc)
-            it
-          (concat acc esh-sep it))
-      acc))
+              (if (s-blank? acc)
+                it
+                (concat acc esh-sep it))
+              acc))
   ;;
   (defun esh-prompt-func ()
     "Build `eshell-prompt-function'"
@@ -1298,12 +1299,12 @@ before packages are loaded."
   ;;  (("b" "Buffers"
   ;;    ("C-d" spacemacs/kill-matching-buffers-rudely "Rudely"))))
 
-;; (spacemacs|spacebind
-;;  "Compare buffers, files and directories."
-;;  :global
-;;  (("TAB" spacemacs/alternate-buffer "Last buffer")
-;;   ("b" "Buffers"
-;;    ("C-e" spacemacs/kill-matching-buffers-rudely "Kill rudely..."))))
+  ;; (spacemacs|spacebind
+  ;;  "Compare buffers, files and directories."
+  ;;  :global
+  ;;  (("TAB" spacemacs/alternate-buffer "Last buffer")
+  ;;   ("b" "Buffers"
+  ;;    ("C-e" spacemacs/kill-matching-buffers-rudely "Kill rudely..."))))
 
 
   ;; (spacemacs|spacebind
@@ -1416,7 +1417,7 @@ before packages are loaded."
   ;; (add-hook 'cider-repl-mode-hook #'subword-mode)
   ;;
   ;;
- ;;
+  ;;
   ;;
   ;;
   ;; Linting with clj-kondo
